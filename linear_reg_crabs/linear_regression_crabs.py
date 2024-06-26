@@ -8,7 +8,7 @@
 # First, we will try to understand the data and visualise the relationships
 # between the different variables
 # After that, we will try to create a model to predict the age of
-# the test dataset
+# the observations on the test dataset
 #-----------------------------------------------------------------------------#
 import pandas as pd
 import numpy as np

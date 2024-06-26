@@ -1,6 +1,14 @@
 #-----------------------------------------------------------------------------#
 # Binary classification - based on kaggle competition
 # https://www.kaggle.com/competitions/playground-series-s3e17/overview
+#
+#
+# The goal of this competition is to predict the probability of failure for
+# each machine (one row representing one machine) given technical variables
+# such as temperature, speed, etc...
+# First, we will try to explore the data and visualise the variables
+# Then, we will try to create a model that we can use to predict the
+# probability of failure for each machine on the test dataset
 #-----------------------------------------------------------------------------#
 import pandas as pd
 import numpy as np
@@ -34,6 +42,47 @@ dict = {'Product ID':'product_id',
 test.rename(dict, axis=1, inplace=True)
 train.rename(dict, axis=1, inplace=True)
 train.rename({'Machine failure':'machine_failure'}, axis=1, inplace=True)
+
+#-----------------------------------------------------------------------------#
+# Exploration of data and visualizations
+#-----------------------------------------------------------------------------#
+# 1. Distribution of product types
+train['Type'].value_counts().plot(kind='bar', color='skyblue')
+plt.title('Distribution of Product Types')
+plt.xlabel('Product Type')
+plt.ylabel('Count')
+
+# Here, we notice that we mainly have products with type "L", then "M" and few "H".
+
+# 2. Air temperature vs. process temperature
+plt.scatter(train['air_temperature_k'], train['process_temperature_k'], alpha=0.5, c='blue')
+plt.title('Air Temperature vs. Process Temperature')
+plt.xlabel('Air Temperature [K]')
+plt.ylabel('Process Temperature [K]')
+
+# We observe a positive relationship between air temperature and process temperature
+
+# 3. Rotational speed distribution
+train['rotational_speed_rpm'].plot(kind='hist', bins=30, color='green')
+plt.title('Distribution of Rotational Speed')
+plt.xlabel('Rotational Speed [rpm]')
+plt.ylabel('Frequency')
+
+# This histogram represents the distribution of rotational speed in revolutions per minute (rpm).
+# It shows that the data is fairly spread out over a range of values, and that
+# the most common rotational speeds appear to cluster around 1500 to 1700 rpm
+# This indicates that the machines typically operate within this mid-range speed, though there are instances of both lower and higher speeds.
+
+# 4. Machine failure count
+train['machine_failure'].value_counts().plot(kind='bar', color='orange')
+plt.title('Machine Failure Count')
+plt.xlabel('Machine Failure')
+plt.ylabel('Count')
+
+# This bar chart shows that machine failures are relatively rare in the dataset.
+# The vast majority of the records indicate no machine failure (value 0), with only a small fraction showing instances of machine failure (value 1).
+# This suggests that machines don't frequently fail.
+
 
 #-----------------------------------------------------------------------------#
 # Logistic regression
