@@ -73,7 +73,7 @@ test_modelled_prediction = np.round(LR.predict(test_features), 0)
 print(test_modelled_prediction)
 
 #-----------------------------------------------------------------------------#
-# # Evaluating model and plots
+# Evaluating model and plots
 #-----------------------------------------------------------------------------#
 # Evaluating model
 MSE = np.mean((test_modelled_prediction - test_age) ** 2)
