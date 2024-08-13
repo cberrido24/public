@@ -7,6 +7,8 @@
 # on the other features.
 # First, we will have a look at the data. Then, we will try to create a model
 # that can predict yield.
+# The data for this competition was generated synthetically and we use it here
+# to run a linear regression.
 #------------------------------------------------------------------------------#
 library(data.table)
 library(ggplot2)
@@ -45,6 +47,7 @@ for(col in colnames){
   print(p)
 }
 # We can focus on variables fruitset, fruitmass and seeds for the moment
+# as they show a clear positive relation with yield.
 
 #------------------------------------------------------------------------------#
 # Linear regression
