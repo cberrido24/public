@@ -67,6 +67,9 @@ summary(linear_regression)
 # Multiple R-squared:  0.7849,	Adjusted R-squared:  0.7849 
 # F-statistic: 5.579e+04 on 1 and 15287 DF,  p-value: < 2.2e-16
 
+# R-squared is 0.78, which indicates a strong fit.
+# Variable fruitset is statistically significant
+
 # checks
 # multicollinearity - we removed fruitmass and seeds in order
 # to take into account multicollinearity
@@ -76,6 +79,10 @@ summary(linear_regression)
 # heteroscedasticity
 plot(linear_regression$fitted.values, linear_regression$residuals)
 abline(h = 0, col = "red")
+
+# normality of residuals
+qqnorm(linear_regression$residuals)
+qqline(linear_regression$residuals, col = "red")
 
 #------------------------------------------------------------------------------#
 # Predicting results
