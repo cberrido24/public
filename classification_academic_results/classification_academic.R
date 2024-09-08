@@ -112,6 +112,37 @@ ggplot(train, aes(x = `Admission grade`, y = `Previous qualification (grade)`, c
 # which indicates that students with lower grades are more likely to drop out.
 
 #--------------------------------------------------------------------------------------------------------
+# Anova: we are going to check whether there are significant differences between the three groups of the
+# variable "Target" in terms of the variable "Curricular units 1st sem (grade)"
+# Ensure the 'Target' variable is a factor
+train$Target <- as.factor(train$Target)
+
+# Quick check for missing values
+print(paste0("There are ", nrow(train[is.na(Target),]), " missing values in variable Target"))
+print(paste0("There are ", nrow(train[is.na(`Curricular units 1st sem (grade)`),]), " missing values in variable Curricular units 1st sem (grade)"))
+
+# Run the anova
+anova_result <- aov(`Curricular units 1st sem (grade)` ~ Target, data = train)
+
+# Summary of ANOVA
+summary(anova_result)
+
+# F-statistic: The F-value is extremely large (34,578.97), which suggests that the variance
+# between the groups ("Graduate", "Dropout", and "Enrolled") is much larger than the variance within the groups.
+
+# p-value: The p-value is effectively 0. Since the p-value is much smaller than the common significance level of 0.05,
+# we can confidently reject the null hypothesis.
+
+# Post-hoc analysis: we want to see which groups differ
+# Run Tukey HSD test
+tukey_result <- TukeyHSD(anova_result)
+
+# Display the results
+print(tukey_result)
+
+# All pair of groups seem to show a significant difference between each other
+
+#--------------------------------------------------------------------------------------------------------
 # Modelling: now we will try to create a predictive model that we can use on our test dataset
 
 
