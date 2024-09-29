@@ -13,6 +13,7 @@
 library(data.table)
 library(ggplot2)
 library(car)
+library(dplyr)
 
 setwd("D:/projects/regression_wild_blueberries/")
 
@@ -24,6 +25,18 @@ test <- fread("inputs/test.csv")
 
 head(train)
 head(test)
+
+#------------------------------------------------------------------------------#
+# Reformatting variables and checks
+
+train <- rename(train, RainyDays = RainingDays)
+train <- train %>% mutate(yield_category = ifelse(yield>3000, "high", "low"))
+train <- train %>% 
+  mutate(AvgTemperature = (MaxOfUpperTRange + MinOfUpperTRange) / 2)
+train <- train %>% filter(yield_category == "low" & AvgTemperature > 60)
+train %>% 
+  group_by(yield_category) %>%
+  summarise(average_seeds = mean(seeds))
 
 #------------------------------------------------------------------------------#
 # Exploring the data
